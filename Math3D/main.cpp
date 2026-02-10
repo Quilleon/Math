@@ -64,7 +64,9 @@ void NewMatrixCalculation()
 
 int main(int argc, char* argv[])
 {
-    //MatrixCalculation();    
+    MatrixCalculation();    
+
+    //NewMatrixCalculation();
     
     return 0;
 }
