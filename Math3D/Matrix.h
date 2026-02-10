@@ -2,27 +2,25 @@
 #include <iostream>
 #include <utility>
 
-struct NewMatrix
+struct Matrix
 {
     int rows;
     int columns;
     
-
-    
     std::vector<float> M;
 
-    NewMatrix(int r, int c, std::vector<float> A)
+    Matrix(int r, int c, std::vector<float> A)
     {
         rows = r;
         columns = c;
 
-        M = std::move(A);
+        SetMatrix(std::move(A));
     }
 
     // Return the position of the float in the matrix
     float P(int r, int c)
     {
-        return r*rows + c;
+        return r*columns + c;
     }
 
     void SetMatrix(std::vector<float> A)
@@ -36,7 +34,7 @@ struct NewMatrix
         {
             for (int c = 0; c < columns; ++c)
             {
-                std::cout << M[r*rows+c] << ", "; 
+                std::cout << M[r*columns+c] << ", "; 
             }
             std::cout << "\n";
         }
@@ -66,7 +64,7 @@ struct NewMatrix
 
 
 
-struct Matrix
+struct OldMatrix
 {
     int rows;
     int columns;
@@ -76,7 +74,7 @@ struct Matrix
 
     
     // Constructor
-    Matrix(int r, int c, float A[5][5])
+    OldMatrix(int r, int c, float A[5][5])
     {
         // Saving the size of the Matrix (max 5x5)
         rows = r > 5 ? 5 : r;

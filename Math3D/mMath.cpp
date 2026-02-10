@@ -3,13 +3,13 @@
 // Transposing a matrix is built into the matrix struct
 Matrix mMath::TransposeMatrix(const Matrix& A)
 {
-    float tempM[5][5];
+    std::vector<float> tempM(A.columns*A.columns);
         
     for (int r = 0; r < A.rows; ++r)
     {
         for (int c = 0; c < A.columns; ++c)
         {
-            tempM[r][c] = A.M[c][r];
+            tempM[r*A.columns+c] = A.M[c*A.columns+r];
         }
     }
         
@@ -26,23 +26,24 @@ Matrix mMath::MultiplyMatrices(const Matrix& A, const Matrix& B)
     }
         
         
-    float tempM[5][5];
+    //float tempM[5][5];
+    std::vector<float> tempM(A.rows*B.columns);
     Matrix newM(A.rows, B.columns, tempM);
 
     //cout << A.rows << ", " << B.columns << "\n";
         
     for (int C = 0; C < B.columns; ++C) //
-        {
+    {
         for (int R = 0; R < A.rows; ++R) //
-            {
+        {
             float tempElement = 0;
 
             for (int i = 0; i < B.rows; ++i) // indexing
-                tempElement += A.M[R][i] * B.M[i][C]; // Adding all the terms together
+                tempElement += A.M[R*A.columns+i] * B.M[i*A.columns+C]; // Adding all the terms together
                 
-            newM.M[R][C] = tempElement;
-            }
+            newM.M[R*A.columns+C] = tempElement;
         }
+    }
 
     return newM;
 }
@@ -56,9 +57,9 @@ Matrix mMath::Cofactor2x2(const Matrix& A)
         return A;
     }
     
-    float cofactorMatrix[5][5] = {
-        {A.M[1][1], -A.M[1][0]},
-        {-A.M[0][1], A.M[0][0]}
+    std::vector<float> cofactorMatrix = {
+        A.M[3], -A.M[2],
+        -A.M[1], A.M[0]
     };
 
     Matrix cofactorA = A;
@@ -90,11 +91,11 @@ Matrix mMath::Cofactor3x3(const Matrix& A)
             int c2 = (c+2)%A.columns;            
 
             // Calculating the two terms separately
-            float a = A.M[r1][c1]*A.M[r2][c2];
-            float b = A.M[r1][c2]*A.M[r2][c1];
+            float a = A.M[r1*A.columns+c1]*A.M[r2*A.columns+c2];
+            float b = A.M[r1*A.columns+c2]*A.M[r2*A.columns+c1];
 
             // Calculating the minor matrix for this element
-            cofactorA.M[r][c] =
+            cofactorA.M[r*A.columns+c] =
                 ((r+c)%2 == 0 ? 1 : -1)             // If i+j is odd then -1, if even then 1
                 * ((r+c)%2 == 0 ? a-b : b-a);       // Change subtraction direction if odd
         }
@@ -117,8 +118,7 @@ Matrix mMath::CofactorOver2(const Matrix& A)
     {
         for (int C = 0; C < A.columns; ++C) 
         {
-            float tempSubmatrix[5][5];
-
+            std::vector<float> tempSubmatrix(submatrixSize*submatrixSize);
             
             int rSkip = 0;
             
@@ -133,8 +133,8 @@ Matrix mMath::CofactorOver2(const Matrix& A)
                 {
                     // Skip column of RC-Element
                     cSkip += c == C ? 1 : 0;
-
-                    tempSubmatrix[r][c] = A.M[r + rSkip][c + cSkip];
+                    
+                    tempSubmatrix[r*submatrixSize+c] = A.M[(r + rSkip)*A.columns+(c + cSkip)];
                 }
             }
                 
@@ -142,7 +142,7 @@ Matrix mMath::CofactorOver2(const Matrix& A)
             float minor = Determinant(submatrix); 
 
             // RC-Element in cofactor matrix becomes the determinant of the cofactor of A[R][C]
-            cofactorA.M[R][C] = ((R+C)%2 == 0 ? 1 : -1) * minor;
+            cofactorA.M[R*A.columns+C] = ((R+C)%2 == 0 ? 1 : -1) * minor;
             
             // -- Debugging --
             //submatrix.PrintMatrix(); //cout << "\n";
@@ -188,7 +188,7 @@ float mMath::Determinant2x2(const Matrix& A)
         return 0;
     }
 
-    return A.M[0][0]*A.M[1][1] - A.M[0][1]*A.M[1][0];
+    return A.M[0]*A.M[3] - A.M[1]*A.M[2];
 }
 
 // This function is more performative for 3x3 than DeterminantOver2()
@@ -214,11 +214,11 @@ float mMath::Determinant3x3(const Matrix& A)
         int c2 = (c+2)%A.columns;
 
         // Calculating the two terms separately
-        float a = A.M[r1][c1]*A.M[r2][c2];
-        float b = A.M[r1][c2]*A.M[r2][c1];
+        float a = A.M[r1*A.columns+c1]*A.M[r2*A.columns+c2];
+        float b = A.M[r1*A.columns+c2]*A.M[r2*A.columns+c1];
 
         // Calculating the element multiplied by its minor, and adding it to the determinant
-        detA += A.M[0][c]
+        detA += A.M[0+c]
             * (c%2 == 0 ? -1 : 1)           // If c is odd then -1, if even then 1
             * (c%2 == 1 ? a-b : b-a);       // Change subtraction direction if odd
     }
@@ -234,7 +234,8 @@ float mMath::DeterminantOver2(const Matrix& A)
 
     for (int i = 0; i < A.columns; ++i)
     {
-        float tempM[5][5];
+        // Submatrix
+        std::vector<float> tempM(submatrixSize*submatrixSize);
         
         // Create the submatrix
         for (int r = 0; r < submatrixSize; ++r)
@@ -245,20 +246,23 @@ float mMath::DeterminantOver2(const Matrix& A)
                 // Skip column
                 cSkip += c == i ? 1 : 0;
                 
-                tempM[r][c] = A.M[r + 1][c + cSkip];
+                tempM[r*submatrixSize+c] = A.M[(r+1)*A.columns+(c + cSkip)];
             }
         }
-            
+        
         Matrix submatrix(submatrixSize, submatrixSize, tempM); 
         float minor = Determinant(submatrix); 
 
-        detA += A.M[0][i] * minor
+        detA += A.M[0+i] * minor
                 * (i%2 == 0 ? 1 : -1);
         
         // -- Debugging --
-        //submatrix.PrintMatrix(); //cout << "\n";
-        //cout << "Determinant: " << minor << "\n";
-        //cout << detA << "\n";
+        if (A.rows == 4)
+        {
+            //submatrix.PrintMatrix(); cout << "\n";
+            //cout << "Determinant of submatrix: " << minor << "\n";
+            //cout << detA << "\n";
+        }
     }
     
     return detA;
@@ -274,7 +278,7 @@ float mMath::Determinant(const Matrix& A)
 
     switch (A.rows)
     {
-    case 1: return A.M[0][0];
+    case 1: return A.M[0];
     case 2: return Determinant2x2(A);
     //case 3: return Determinant3x3(A);
     default:
@@ -284,6 +288,7 @@ float mMath::Determinant(const Matrix& A)
             return 0;
         }
 
+        //cout << "cringe";
         return DeterminantOver2(A);
         
         cout << "NO IMPLEMENTATION FOR DETERMINANT OF THE SQUARE MATRIX!\n";
@@ -304,10 +309,10 @@ Matrix mMath::Inverse(const Matrix& A)
     const float detA = Determinant(A);
     
     if (detA == 0)
-        {
+    {
         cout << "Determinant is zero, cannot inverse!\n";
         return A;
-        }
+    }
 
     
     Matrix tempA = Adjoint(A);
