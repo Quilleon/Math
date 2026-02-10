@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chris\\OneDrive\\Dokumenter\\Math3D\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6F1FEC3C-D9DB-4372-A325-2C5F83E33A34}|Math3D\\Math3D.vcxproj|C:\\Users\\chris\\OneDrive\\Dokumenter\\Math3D\\Math3D\\Math3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6F1FEC3C-D9DB-4372-A325-2C5F83E33A34}|Math3D\\Math3D.vcxproj|solutionrelative:Math3D\\Math3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Math3D.cpp",
+              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\Dokumenter\\Math3D\\Math3D\\Math3D.cpp",
+              "RelativeDocumentMoniker": "Math3D\\Math3D.cpp",
+              "ToolTip": "C:\\Users\\chris\\OneDrive\\Dokumenter\\Math3D\\Math3D\\Math3D.cpp",
+              "RelativeToolTip": "Math3D\\Math3D.cpp",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADsAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-20T08:07:05.41Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
