@@ -39,9 +39,9 @@ Matrix mMath::MultiplyMatrices(const Matrix& A, const Matrix& B)
             float tempElement = 0;
 
             for (int i = 0; i < B.rows; ++i) // indexing
-                tempElement += A.M[R*A.columns+i] * B.M[i*A.columns+C]; // Adding all the terms together
+                tempElement += A.M[R*A.columns+i] * B.M[i*B.columns+C]; // Adding all the terms together
                 
-            newM.M[R*A.columns+C] = tempElement;
+            newM.M[R*B.columns+C] = tempElement;
         }
     }
 

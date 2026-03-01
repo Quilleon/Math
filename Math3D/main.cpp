@@ -20,9 +20,7 @@ void MatrixCalculation()
     };
     
     
-    const Matrix A(4, 4, inputMatrixA);
-    cout << "Input matrix A:\n"; A.PrintMatrix();
-
+    const Matrix A(4, 4, inputMatrixA);    cout << "Input matrix A:\n"; A.PrintMatrix();
     
     const Matrix B(4, 1, inputMatrixB);cout << "Input matrix B:\n"; B.PrintMatrix();
     
@@ -40,7 +38,7 @@ void MatrixCalculation()
     const Matrix invA = mMath::Inverse(A);cout << "Inverse A-matrix:\n"; invA.PrintMatrix();
 
     
-    const Matrix solAB = mMath::MultiplyMatrices(invA, B);cout << "Solution invA*B matrix:\n"; solAB.PrintMatrix();
+    const Matrix solAB = mMath::MultiplyMatrices(invA, B); cout << "Solution invA*B matrix:\n"; solAB.PrintMatrix();
 }
 
 void NewMatrixCalculation()
@@ -60,11 +58,59 @@ void NewMatrixCalculation()
     A.PrintMatrix();
 }
 
-int main(int argc, char* argv[])
+void Task464()
 {
-    MatrixCalculation();    
+    std::vector<float> inputMatrixA = {
+        0,        0,       0,       1,
+        0.125,    0.25,    0.5,     1,
+        3.375f,   2.25,    1.5,     1,
+        27,       9,       3,       1,
+    };
+    
+    const Matrix A(4, 4, inputMatrixA);
+    
+    
+    std::vector<float> inputMatrixB = {
+        1, 
+        9.0/16,
+        -5.0/16, 
+        4
+    };
+    
+    const Matrix B(4, 1, inputMatrixB);
 
+    
+    const Matrix solAB = mMath::MultiplyMatrices(mMath::Inverse(A), B);
+    cout << "Solution matrix for task 4.6.4:\n"; solAB.PrintMatrix();
+}
+
+void Task467()
+{
+    
+}
+
+void Task4614()
+{
+    
+}
+
+void Task4615()
+{
+    
+}
+
+
+int main(int argc, char* argv[])
+{       
+    //MatrixCalculation();
+    
     //NewMatrixCalculation();
+
+    
+    Task464();
+
+    
+    
     
     return 0;
 }
