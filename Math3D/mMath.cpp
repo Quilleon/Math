@@ -52,9 +52,10 @@ Matrix mMath::MultiplyMatrices(const Matrix& A, const Matrix& B)
 
 Matrix mMath::Cofactor2x2(const Matrix& A)
 {
-    if (A.columns == 2 && A.rows == 2)
+    if (A.columns != 2 || A.rows != 2)
     {
-        cout << "CANNOT FIND 2x2 COFACTOR MATRIX FOR NON-SQUARE MATRIX!\n";
+        cout << "CANNOT FIND 2x2 COFACTOR MATRIX FOR NON 2x2 MATRIX!\n";
+        cout << "Rows: " << A.rows << ", Columns: " << A.columns << endl;
         return A;
     }
     
@@ -167,7 +168,7 @@ Matrix mMath::Adjoint(const Matrix& A)
     {
     case 1: return A;
     case 2: return TransposeMatrix(Cofactor2x2(A));
-    //case 3: return TransposeMatrix(Cofactor3x3(A));
+    case 3: return TransposeMatrix(Cofactor3x3(A));
     default:
         if (A.rows < 1)
         {

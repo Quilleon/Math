@@ -64,7 +64,7 @@ void Task464()
     //  Find a polynomial of degree ≤ 3 which interpolates the points
     //  (0, 1), (1/2, 9/16), (3/2, -5/16), (3, 4)
     
-    // x-Matrix
+    // A-Matrix
     std::vector<float> inputMatrixA = {
         0,        0,       0,       1,
         0.125,    0.25,    0.5,     1,
@@ -95,12 +95,12 @@ void Task467()
     //  Construct a polynomial of degree ≤ 3 which interpolates the points p0(1, 0) and
     //  p1(π, 0) and where the derivatives are respectively 1 and -1 (we write p′(x0) = 1 and p′(x1) = −1).
     
-    // x-Matrix
+    // A-Matrix
     std::vector<float> inputMatrixA = {
         1,        1,       1,       1,
-        PI*PI*PI, PI*PI,   PI,      1,
+        31, 9.8696f,   3.1415f,      1,
         1,        1,       1,       0,
-        PI*PI,    PI,      1,       0,
+        9.8696f,    3.1415f,      1,       0,
     };
     
     const Matrix A(4, 4, inputMatrixA);
@@ -126,7 +126,7 @@ void Task4614()
     // Use the method of least squares to find the equation of the straight line which
     // fits the points best possible: (4, 3),(0, 1),(2, 0) og (3, 4).
 
-    // x-Matrix
+    // A-Matrix
     std::vector<float> inputMatrixA = {
         4,  1,
         0,  1,
@@ -145,16 +145,16 @@ void Task4614()
         4
     };
     
-    const Matrix Y(4, 1, inputMatrixB);
+    const Matrix y(4, 1, inputMatrixB);
     
     //mMath::TransposeMatrix(A).PrintMatrix();
     
     const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
-
-    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), Y);
     
-    const Matrix solAB = mMath::MultiplyMatrices(invB, c);
-    cout << "Solution matrix for task 4.6.14:\n"; solAB.PrintMatrix();
+    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
+    
+    const Matrix x = mMath::MultiplyMatrices(invB, c);
+    cout << "Solution matrix for task 4.6.14:\n"; x.PrintMatrix();
 }
 
 
@@ -171,7 +171,7 @@ void Task4615()
     2. Find the equation for the second degree polynomial.
     */
 
-    // x-Matrix
+    // A-Matrix
     std::vector<float> inputMatrixA = {
         12*12,  12,  1,
         12*12,  12,  1,
@@ -181,8 +181,8 @@ void Task4615()
     };
     
     const Matrix A(5, 3, inputMatrixA);
-    cout << "A Matrix:\n"; A.PrintMatrix();
-    cout << "AT Matrix:\n"; mMath::TransposeMatrix(A).PrintMatrix();
+    cout << "A Matrix:\n"; A.PrintMatrix(); cout << endl;
+    cout << "AT Matrix:\n"; mMath::TransposeMatrix(A).PrintMatrix(); cout << endl;
     
     // y-Matrix
     std::vector<float> inputMatrixB = {
@@ -193,7 +193,15 @@ void Task4615()
         3
     };
     
-    const Matrix Y(5, 1, inputMatrixB);
+    const Matrix y(5, 1, inputMatrixB);
+
+    
+    const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
+    
+    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
+    
+    const Matrix x = mMath::MultiplyMatrices(invB, c);
+    cout << "Solution matrix for task 4.6.15:\n"; x.PrintMatrix();
     
 }
 
@@ -205,11 +213,16 @@ int main(int argc, char* argv[])
     //NewMatrixCalculation();
 
     
-    //Task464();
-
-    //Task467();
+    cout << "\n-------------\n";
     
-    //Task4614();
+    Task464();
+    cout << "\n-------------\n";
+
+    Task467();
+    cout << "\n-------------\n";
+    
+    Task4614();
+    cout << "\n-------------\n";
 
     Task4615();
     
