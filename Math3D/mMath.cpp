@@ -9,10 +9,10 @@ Matrix mMath::TransposeMatrix(const Matrix& A)
     {
         for (int c = 0; c < A.columns; ++c)
         {
-            tempM[r*A.rows+c] = A.M[c*A.columns+r];
+            tempM[c*A.rows+r] = A.M[r*A.columns+c];
         }
     }
-        
+    
     const Matrix AT(A.columns, A.rows, tempM);
     
     return AT;

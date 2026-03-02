@@ -147,6 +147,7 @@ void Task4614()
     
     const Matrix Y(4, 1, inputMatrixB);
     
+    //mMath::TransposeMatrix(A).PrintMatrix();
     
     const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
 
@@ -156,8 +157,43 @@ void Task4614()
     cout << "Solution matrix for task 4.6.14:\n"; solAB.PrintMatrix();
 }
 
+
 void Task4615()
 {
+    /*
+    In a game scene the player is moving along a parabola (the graph of a second
+    degree polynomial) and collect trophys along the path. The trophys have coordinates:
+
+    (12,12), (12,32), (52, −1), (3,12), (4, 3)
+    
+    The parabolic path should be constructed using the method of least squares.
+    1. Write down the matrices A, AT and the vector y = ATb
+    2. Find the equation for the second degree polynomial.
+    */
+
+    // x-Matrix
+    std::vector<float> inputMatrixA = {
+        12*12,  12,  1,
+        12*12,  12,  1,
+        52*52,  52,  1,
+        3*3,    3,   1,
+        4*4,    4,   1
+    };
+    
+    const Matrix A(5, 3, inputMatrixA);
+    cout << "A Matrix:\n"; A.PrintMatrix();
+    cout << "AT Matrix:\n"; mMath::TransposeMatrix(A).PrintMatrix();
+    
+    // y-Matrix
+    std::vector<float> inputMatrixB = {
+        12, 
+        32,
+        -1, 
+        12,
+        3
+    };
+    
+    const Matrix Y(5, 1, inputMatrixB);
     
 }
 
@@ -173,7 +209,9 @@ int main(int argc, char* argv[])
 
     //Task467();
     
-    Task4614();
+    //Task4614();
+
+    Task4615();
     
     return 0;
 }
