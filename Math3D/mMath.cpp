@@ -3,17 +3,18 @@
 // Transposing a matrix is built into the matrix struct
 Matrix mMath::TransposeMatrix(const Matrix& A)
 {
-    std::vector<float> tempM(A.columns*A.columns);
+    std::vector<float> tempM(A.columns*A.rows);
         
     for (int r = 0; r < A.rows; ++r)
     {
         for (int c = 0; c < A.columns; ++c)
         {
-            tempM[r*A.columns+c] = A.M[c*A.columns+r];
+            tempM[r*A.rows+c] = A.M[c*A.columns+r];
         }
     }
         
-    const Matrix AT(A.rows, A.columns, tempM);
+    const Matrix AT(A.columns, A.rows, tempM);
+    
     return AT;
 }
 

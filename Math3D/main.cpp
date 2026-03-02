@@ -58,8 +58,13 @@ void NewMatrixCalculation()
     A.PrintMatrix();
 }
 
+
 void Task464()
 {
+    //  Find a polynomial of degree ≤ 3 which interpolates the points
+    //  (0, 1), (1/2, 9/16), (3/2, -5/16), (3, 4)
+    
+    // x-Matrix
     std::vector<float> inputMatrixA = {
         0,        0,       0,       1,
         0.125,    0.25,    0.5,     1,
@@ -69,7 +74,7 @@ void Task464()
     
     const Matrix A(4, 4, inputMatrixA);
     
-    
+    // y-Matrix
     std::vector<float> inputMatrixB = {
         1, 
         9.0/16,
@@ -84,14 +89,71 @@ void Task464()
     cout << "Solution matrix for task 4.6.4:\n"; solAB.PrintMatrix();
 }
 
+// Gives weird numbers
 void Task467()
 {
+    //  Construct a polynomial of degree ≤ 3 which interpolates the points p0(1, 0) and
+    //  p1(π, 0) and where the derivatives are respectively 1 and -1 (we write p′(x0) = 1 and p′(x1) = −1).
     
+    // x-Matrix
+    std::vector<float> inputMatrixA = {
+        1,        1,       1,       1,
+        PI*PI*PI, PI*PI,   PI,      1,
+        1,        1,       1,       0,
+        PI*PI,    PI,      1,       0,
+    };
+    
+    const Matrix A(4, 4, inputMatrixA);
+    
+    // y-Matrix
+    std::vector<float> inputMatrixB = {
+        0, 
+        0,
+        1, 
+        -1
+    };
+    
+    const Matrix B(4, 1, inputMatrixB);
+
+    
+    const Matrix solAB = mMath::MultiplyMatrices(mMath::Inverse(A), B);
+    cout << "Solution matrix for task 4.6.7:\n"; solAB.PrintMatrix();
 }
+
 
 void Task4614()
 {
+    // Use the method of least squares to find the equation of the straight line which
+    // fits the points best possible: (4, 3),(0, 1),(2, 0) og (3, 4).
+
+    // x-Matrix
+    std::vector<float> inputMatrixA = {
+        4,  1,
+        0,  1,
+        2,  1,
+        3,  1
+    };
     
+    const Matrix A(4, 2, inputMatrixA);
+    
+    
+    // y-Matrix
+    std::vector<float> inputMatrixB = {
+        3, 
+        1,
+        0, 
+        4
+    };
+    
+    const Matrix Y(4, 1, inputMatrixB);
+    
+    
+    const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
+
+    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), Y);
+    
+    const Matrix solAB = mMath::MultiplyMatrices(invB, c);
+    cout << "Solution matrix for task 4.6.14:\n"; solAB.PrintMatrix();
 }
 
 void Task4615()
@@ -107,10 +169,11 @@ int main(int argc, char* argv[])
     //NewMatrixCalculation();
 
     
-    Task464();
+    //Task464();
 
+    //Task467();
     
-    
+    Task4614();
     
     return 0;
 }
