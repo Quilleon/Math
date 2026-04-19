@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#pragma region Compulsory 2
+#pragma region Compulsory 2 - Tasks
 
 void Task464()
 {
@@ -32,7 +32,7 @@ void Task464()
 
     
     const Matrix x = mMath::MultiplyMatrices(mMath::Inverse(A), B);
-    cout << "Solution matrix for task 4.6.4:\n"; x.PrintMatrix();
+    cout << "Solution matrix for task 4.6.4:\n"; x.PrintMatrix(1);
 }
 
 
@@ -63,7 +63,7 @@ void Task467()
 
     
     const Matrix x = mMath::MultiplyMatrices(mMath::Inverse(A), B);
-    cout << "Solution matrix for task 4.6.7:\n"; x.PrintMatrix();
+    cout << "Solution matrix for task 4.6.7:\n"; x.PrintMatrix(5);
 }
 
 
@@ -100,7 +100,7 @@ void Task4614()
     const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
     
     const Matrix x = mMath::MultiplyMatrices(invB, c);
-    cout << "Solution matrix for task 4.6.14:\n"; x.PrintMatrix();
+    cout << "Solution matrix for task 4.6.14:\n"; x.PrintMatrix(5);
 }
 
 
@@ -124,11 +124,11 @@ void Task4615()
         25.f/4,     2.5,    1,
         3*3,        3,      1,
         4*4,        4,      1
-    };
+    };    
     
-    const Matrix A(5, 3, inputMatrixA);
-    cout << "A Matrix:\n"; A.PrintMatrix(); cout << endl;
-    cout << "AT Matrix:\n"; mMath::TransposeMatrix(A).PrintMatrix(); cout << endl;
+    Matrix A(5, 3, inputMatrixA);
+    cout << "A Matrix:\n"; A.PrintMatrix(2); cout << endl;
+    cout << "AT Matrix:\n"; mMath::TransposeMatrix(A).PrintMatrix(2); cout << endl;
     
     // y-Matrix
     std::vector<float> inputMatrixB = {
@@ -147,13 +147,14 @@ void Task4615()
     const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
     
     const Matrix x = mMath::MultiplyMatrices(invB, c);
-    cout << "Solution matrix for task 4.6.15:\n"; x.PrintMatrix();
+    cout << "Solution matrix for task 4.6.15:\n"; x.PrintMatrix(5);
     
 }
 
 
 void Compulsory2()
 {
+    
     cout << "\n-------------\n";
     
     Task464();
@@ -171,9 +172,35 @@ void Compulsory2()
 #pragma endregion 
 
 
+void ShowcaseLU()
+{
+    std::vector<float> inputMatrixA = {
+        1,      2,      3,      1,
+        2,      3,      4,      1,
+        3,      4,      2,      1,
+    };
+    
+    Matrix A(3, 4, inputMatrixA);
+
+    cout << "\n-------------\n";
+
+    cout << "Before LU factorization:\n";
+    A.PrintMatrix(0);
+    
+    A.LU();
+    cout << "\nAfter LU factorization:\n";
+    A.PrintMatrix(0);
+
+    cout << "-------------\n";
+}
+
+
 int main(int argc, char* argv[])
 {
+    //ShowcaseLU();
+    
     Compulsory2();
+    
     
     return 0;
 }

@@ -29,7 +29,7 @@ struct Matrix
         M = std::move(A); // What is move??
     }
     
-    void PrintMatrix() const
+    void PrintMatrix(int precision = 3) const
     {
         for (int r = 0; r < rows; ++r)
         {
@@ -39,7 +39,7 @@ struct Matrix
             for (int c = 0; c < columns; ++c)
             {
                 // Set decimal precision to 3 for all numbers
-                std::cout << std::fixed << std::setprecision(3) << M[r*columns+c];
+                std::cout << std::fixed << std::setprecision(precision) << M[r*columns+c];
 
                 // Print comma between column-values
                 if (c+1 < columns)
@@ -71,76 +71,44 @@ struct Matrix
         for (float& i : M)
             i *= scale;
     }
-};
 
 
-
-struct OldMatrix
-{
-    int rows;
-    int columns;
+    // Getter I implemented late
+    float Mat(int r, int c) const { return M[r*columns+c]; }
+    void SetMat(int r, int c, float x) { M[r*columns+c] = x; }
     
-    // Max size of 5x5
-    float M[5][5];
-
-    
-    // Constructor
-    OldMatrix(int r, int c, float A[5][5])
+    void LU()
     {
-        // Saving the size of the Matrix (max 5x5)
-        rows = r > 5 ? 5 : r;
-        columns = c > 5 ? 5 : c;
-
-        // Setting the matrix
-        SetMatrix(A);
-    }
-
-    void SetMatrix(float newM[5][5])
-    {
-        for (int r = 0; r < rows; ++r)
+        for (int k=0; k<rows-1; k++)
         {
-            for (int c = 0; c < columns; ++c)
+            if (Mat(k, k) == 0)
             {
-                M[r][c] = newM[r][c]; 
+                std::cout << "Zero pivot! LU without pivot failed! \n";
+                return;
             }
-        }
-    }
-
-    
-    void PrintMatrix() const
-    {
-        for (int r = 0; r < rows; ++r)
-        {
-            for (int c = 0; c < columns; ++c)
+            
+            // pivot(k);
+            // By row operations we obtain 0 under diagonal element
+            // in all rows below (column k)
+            // We subtract a multiplum of kth row
+            // from the rows below, starting from left
+            
+            for (int i=k+1; i<rows; i++)
             {
-                std::cout << M[r][c] << ", "; 
-            }
-            std::cout << "\n";
-        }
-    }
+                // Multiply with this and subtract from row i
+                // This becomes zero, store factor here
+                //M[i][k] = M[i][k]/M[k][k];
+                SetMat(i, k, Mat(i, k)/Mat(k, k));
+                
+                for (int j=k+1; j<columns; j++)
+                {
+                    // column to the right of the column which gets zeros
+                    //M[i][j] = M[i][j] - M[i][k]* M[k][j];
+                    SetMat(i, j, Mat(i, j) - Mat(i, k)*Mat(k, j));
+                }
 
-    void TransposeMatrix()
-    {
-        float tempM[5][5];
-        
-        for (int r = 0; r < rows; ++r)
-        {
-            for (int c = 0; c < columns; ++c)
-            {
-                tempM[r][c] = M[c][r];
-            }
-        }
-
-        SetMatrix(tempM);
-    }
-    
-    void ScaleMatrix(float scale)
-    {
-        for (int i = 0; i < rows; ++i)
-        {
-            for (int j = 0; j < columns; ++j)
-            {
-                M[i][j] *= scale;
+                // Set zeros in the triangle
+                SetMat(i, k, 0);
             }
         }
     }
