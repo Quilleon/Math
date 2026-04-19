@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#define PI 3.0f
+#define PI 3.141592
 
 class mMath
 {

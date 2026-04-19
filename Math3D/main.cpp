@@ -58,6 +58,7 @@ void NewMatrixCalculation()
     A.PrintMatrix();
 }
 
+#pragma region Compulsory 2
 
 void Task464()
 {
@@ -85,11 +86,11 @@ void Task464()
     const Matrix B(4, 1, inputMatrixB);
 
     
-    const Matrix solAB = mMath::MultiplyMatrices(mMath::Inverse(A), B);
-    cout << "Solution matrix for task 4.6.4:\n"; solAB.PrintMatrix();
+    const Matrix x = mMath::MultiplyMatrices(mMath::Inverse(A), B);
+    cout << "Solution matrix for task 4.6.4:\n"; x.PrintMatrix();
 }
 
-// Gives weird numbers
+
 void Task467()
 {
     //  Construct a polynomial of degree ≤ 3 which interpolates the points p0(1, 0) and
@@ -98,9 +99,9 @@ void Task467()
     // A-Matrix
     std::vector<float> inputMatrixA = {
         1,        1,       1,       1,
-        31, 9.8696f,   3.1415f,      1,
-        1,        1,       1,       0,
-        9.8696f,    3.1415f,      1,       0,
+        PI*PI*PI, PI*PI,  PI,      1,
+        3,        2,       1,       0,
+        3*PI*PI,    2*PI,      1,       0,
     };
     
     const Matrix A(4, 4, inputMatrixA);
@@ -116,8 +117,8 @@ void Task467()
     const Matrix B(4, 1, inputMatrixB);
 
     
-    const Matrix solAB = mMath::MultiplyMatrices(mMath::Inverse(A), B);
-    cout << "Solution matrix for task 4.6.7:\n"; solAB.PrintMatrix();
+    const Matrix x = mMath::MultiplyMatrices(mMath::Inverse(A), B);
+    cout << "Solution matrix for task 4.6.7:\n"; x.PrintMatrix();
 }
 
 
@@ -164,7 +165,7 @@ void Task4615()
     In a game scene the player is moving along a parabola (the graph of a second
     degree polynomial) and collect trophys along the path. The trophys have coordinates:
 
-    (12,12), (12,32), (52, −1), (3,12), (4, 3)
+    (1/2, 1/2), (1/2, 3/2), (5/2, −1), (3, 1/2), (4, 3)
     
     The parabolic path should be constructed using the method of least squares.
     1. Write down the matrices A, AT and the vector y = ATb
@@ -173,11 +174,11 @@ void Task4615()
 
     // A-Matrix
     std::vector<float> inputMatrixA = {
-        12*12,  12,  1,
-        12*12,  12,  1,
-        52*52,  52,  1,
-        3*3,    3,   1,
-        4*4,    4,   1
+        1.f/4,      .5,     1,
+        1.f/4,      .5,     1,
+        25.f/4,     2.5,    1,
+        3*3,        3,      1,
+        4*4,        4,      1
     };
     
     const Matrix A(5, 3, inputMatrixA);
@@ -186,10 +187,10 @@ void Task4615()
     
     // y-Matrix
     std::vector<float> inputMatrixB = {
-        12, 
-        32,
+        .5, 
+        1.5,
         -1, 
-        12,
+        .5,
         3
     };
     
@@ -206,13 +207,8 @@ void Task4615()
 }
 
 
-int main(int argc, char* argv[])
-{       
-    //MatrixCalculation();
-    
-    //NewMatrixCalculation();
-
-    
+void Compulsory2()
+{
     cout << "\n-------------\n";
     
     Task464();
@@ -225,6 +221,19 @@ int main(int argc, char* argv[])
     cout << "\n-------------\n";
 
     Task4615();
+}
+
+#pragma endregion 
+
+
+int main(int argc, char* argv[])
+{       
+    //MatrixCalculation();
+    
+    //NewMatrixCalculation();
+
+    Compulsory2();
+
     
     return 0;
 }
