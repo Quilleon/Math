@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <iomanip>
 #include <iostream>
 #include <utility>
 
@@ -32,11 +33,21 @@ struct Matrix
     {
         for (int r = 0; r < rows; ++r)
         {
+            // Frame
+            std::cout << "|";
+            
             for (int c = 0; c < columns; ++c)
             {
-                std::cout << M[r*columns+c] << ", "; 
+                // Set decimal precision to 3 for all numbers
+                std::cout << std::fixed << std::setprecision(3) << M[r*columns+c];
+
+                // Print comma between column-values
+                if (c+1 < columns)
+                    std::cout << ", ";
             }
-            std::cout << "\n";
+            
+            // Frame
+            std::cout << "|\n";
         }
     }
 
