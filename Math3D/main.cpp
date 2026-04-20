@@ -44,9 +44,9 @@ void Task467()
     // A-Matrix
     std::vector<float> inputMatrixA = {
         1,        1,       1,       1,
-        PI*PI*PI, PI*PI,  PI,      1,
+        PI*PI*PI, PI*PI,   PI,      1,
         3,        2,       1,       0,
-        3*PI*PI,    2*PI,      1,       0,
+        3*PI*PI,  2*PI,    1,       0,
     };
     
     const Matrix A(4, 4, inputMatrixA);
@@ -93,7 +93,6 @@ void Task4614()
     
     const Matrix y(4, 1, inputMatrixB);
     
-    //mMath::TransposeMatrix(A).PrintMatrix();
     
     const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
     
@@ -139,16 +138,16 @@ void Task4615()
         3
     };
     
-    const Matrix y(5, 1, inputMatrixB);
+    const Matrix b(5, 1, inputMatrixB);
 
     
     const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
     
-    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
+    const Matrix y = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), b);
+    cout << "y vector:\n";  y.PrintMatrix(); cout << endl;
     
-    const Matrix x = mMath::MultiplyMatrices(invB, c);
+    const Matrix x = mMath::MultiplyMatrices(invB, y);
     cout << "Solution matrix for task 4.6.15:\n"; x.PrintMatrix(5);
-    
 }
 
 
@@ -197,10 +196,9 @@ void ShowcaseLU()
 
 int main(int argc, char* argv[])
 {
-    //ShowcaseLU();
+    ShowcaseLU();
     
     Compulsory2();
-    
     
     return 0;
 }

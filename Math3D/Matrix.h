@@ -26,7 +26,7 @@ struct Matrix
 
     void SetMatrix(std::vector<float> A)
     {
-        M = std::move(A); // What is move??
+        M = std::move(A);
     }
     
     void PrintMatrix(int precision = 3) const
@@ -38,12 +38,17 @@ struct Matrix
             
             for (int c = 0; c < columns; ++c)
             {
+                std::string negativeSpace = (M[r*columns+c] < 0) ? "" : " ";
+                std::string over10Space = (M[r*columns+c] >= 10) ? "" : " ";
+                //std::string negative10Space = (M[r*columns+c] <= -10) ? "" : " ";
+                std::cout << negativeSpace + over10Space;
+                
                 // Set decimal precision to 3 for all numbers
                 std::cout << std::fixed << std::setprecision(precision) << M[r*columns+c];
 
                 // Print comma between column-values
                 if (c+1 < columns)
-                    std::cout << ", ";
+                    std::cout << ",";
             }
             
             // Frame
