@@ -91,14 +91,14 @@ void Task4614()
         4
     };
     
-    const Matrix y(4, 1, inputMatrixB);
+    const Matrix b(4, 1, inputMatrixB);
     
     
-    const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
+    const Matrix invA = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
     
-    const Matrix c = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), y);
+    const Matrix y = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), b);
     
-    const Matrix x = mMath::MultiplyMatrices(invB, c);
+    const Matrix x = mMath::MultiplyMatrices(invA, y);
     cout << "Solution matrix for task 4.6.14:\n"; x.PrintMatrix(5);
 }
 
@@ -141,12 +141,12 @@ void Task4615()
     const Matrix b(5, 1, inputMatrixB);
 
     
-    const Matrix invB = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
+    const Matrix invA = mMath::Inverse(mMath::MultiplyMatrices(mMath::TransposeMatrix(A), A));
     
     const Matrix y = mMath::MultiplyMatrices(mMath::TransposeMatrix(A), b);
     cout << "y vector:\n";  y.PrintMatrix(); cout << endl;
     
-    const Matrix x = mMath::MultiplyMatrices(invB, y);
+    const Matrix x = mMath::MultiplyMatrices(invA, y);
     cout << "Solution matrix for task 4.6.15:\n"; x.PrintMatrix(5);
 }
 
