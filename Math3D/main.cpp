@@ -193,12 +193,33 @@ void ShowcaseLU()
     cout << "-------------\n";
 }
 
+void Mathing()
+{
+    std::vector<float> inputMatrixB = {
+        626,     172,     50,
+        172,     50,      16,
+        50,      16,      6
+    };
+
+    Matrix B(3, 3, inputMatrixB);
+    //mMath::Inverse(B).PrintMatrix();
+
+    std::vector<float> inputMatrixA = {
+        143, 41, 13
+    };
+
+    Matrix c(3, 1, inputMatrixA);
+
+    mMath::MultiplyMatrices(mMath::Inverse(B), c).PrintMatrix();
+}
 
 int main(int argc, char* argv[])
 {
-    ShowcaseLU();
+    //ShowcaseLU();
     
-    Compulsory2();
+    //Compulsory2();
+
+    Mathing();
     
     return 0;
 }
